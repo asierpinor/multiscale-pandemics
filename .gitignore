@@ -1,0 +1,7 @@
+.vscode/
+data/
+docs/
+plots/
+notebooks/
+code_improvs.md
+__pycache__/
