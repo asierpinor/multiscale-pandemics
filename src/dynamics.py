@@ -350,7 +350,7 @@ class Dynamics:
                 self.Ivec = self.gen.binomial( n=self.N[(self.ml,self.nl)], p=probI )
 
             if self.distrib == 'poisson':
-                Ivec = self.gen.poisson( lam=probI * self.N[(self.ml,self.nl)] )
+                self.Ivec = self.gen.poisson( lam=probI * self.N[(self.ml,self.nl)] )
 
             if self.distrib == 'neg_binomial':
                 if np.sum(self.Ivec)>0:
