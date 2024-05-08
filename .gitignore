@@ -4,3 +4,4 @@ plots/
 notebooks/
 code_improvs.md
 __pycache__/
+.DS_Store

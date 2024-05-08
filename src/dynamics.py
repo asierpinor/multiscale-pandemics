@@ -3,6 +3,7 @@ This module contains the Dynamics class, which sets up the system and runs the t
 """
 
 import numpy as np
+import time
 from observables import Observables
 from policy import Policy
 from initial_conditions import Initial_Condition
@@ -244,17 +245,18 @@ class Dynamics:
     def evolve_one_step(self):
         """Evolve system one time step."""
         
-        # Compute probability of infection and recovery
-        probI, probR = self.compute_probability_infection()
-        
-        # Update state
-        self.update_state(probI,probR)
-        
         # Add noise
         if self.noise>0: self.add_noise()
+
+        if np.sum(self.Ivec)>0:
+            # Compute probability of infection and recovery
+            probI, probR = self.compute_probability_infection()
             
-        # Update policy
-        self.Tmat = self.pol.apply_policy(self.Ivec,self.Tmat)
+            # Update state
+            self.update_state(probI,probR)
+                
+            # Update policy
+            self.Tmat = self.pol.apply_policy(self.Ivec,self.Tmat)
         
     
     

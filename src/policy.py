@@ -3,6 +3,7 @@ This module contains the Policy class to modify transmission probabilities due t
 """
 
 import numpy as np
+import time
 
 class Policy:
     """
@@ -115,7 +116,7 @@ class Policy:
 
         g_clusters_before = (current_policy == 'g')
         r_clusters_before = (current_policy == 'r')
-        
+
         ### Green clusters
         # Increase counter if above threshold
         above_hGtoR = ((cases>=GtoRthreshold) & g_clusters_before)
@@ -145,7 +146,7 @@ class Policy:
     
     def compute_indices_lower_level (self, selector, nclusters_high, children_high_to_low):
         """Combine the set of indices of all the sub-entities belonging to entities selected by the selector."""
-    
+        
         indices_clusters = np.arange(nclusters_high)[selector]
         indices = np.concatenate([children_high_to_low[cc] for cc in indices_clusters] + [np.array([],dtype=int)])
         
@@ -288,26 +289,33 @@ class Policy:
         r_clusters_before = (self.current_policy1 == 'r')
         
         # Level 1 policy update
-        NIc = np.array([ np.sum( Ivec[self.cluster1_children[cc]] ) for cc in range(self.nclusters1) ])
+        if self.mpol1==self.ml:
+            NIc = Ivec
+        else:
+            # NOTE: Potential performance bottleneck
+            NIc = np.array([ np.sum( Ivec[self.cluster1_children[cc]] ) for cc in range(self.nclusters1) ])
         
         change_GtoR, change_RtoG = self.update_policy(NIc, self.current_policy1, self.GREENcounter1,
                                                       self.REDcounter1, self.GREENdelay, self.REDdelay,
                                                       self.GtoRthreshold, self.RtoGthreshold)
-        
+
         g_clusters_after = (self.current_policy1 == 'g')
         r_clusters_after = (self.current_policy1 == 'r')
-        
-        
-        # Compute indices at Tml-scale
-        indices_GtoR = self.compute_indices_lower_level(change_GtoR, self.nclusters1, self.cluster1_Tml_children)
-        indices_RtoG = self.compute_indices_lower_level(change_RtoG, self.nclusters1, self.cluster1_Tml_children)
-        indices_GtoG = self.compute_indices_lower_level(g_clusters_before & g_clusters_after, self.nclusters1, self.cluster1_Tml_children)
-        
         
         # Compute indices at mpol1-scale
         indices_clusters_GtoR = np.arange(self.nclusters1)[change_GtoR]
         indices_clusters_RtoG = np.arange(self.nclusters1)[change_RtoG]
-        
+
+        # Compute indices at Tml-scale
+        if self.mpol1==self.Tml:
+            indices_GtoR = indices_clusters_GtoR
+            indices_RtoG = indices_clusters_RtoG
+            indices_GtoG = np.arange(self.nclusters1)[g_clusters_before & g_clusters_after]
+        else:
+            # NOTE: Potential performance bottleneck
+            indices_GtoR = self.compute_indices_lower_level(change_GtoR, self.nclusters1, self.cluster1_Tml_children)
+            indices_RtoG = self.compute_indices_lower_level(change_RtoG, self.nclusters1, self.cluster1_Tml_children)
+            indices_GtoG = self.compute_indices_lower_level(g_clusters_before & g_clusters_after, self.nclusters1, self.cluster1_Tml_children)
 
         # Update Tmat
         # Travel changes if region 1 is GtoR (RtoG), and region to is Gbefore (Gafter)
@@ -318,8 +326,7 @@ class Policy:
         Tmat[indices_RtoG[:,None],indices_RtoG[None,:]] *= self.reductionTravel
         Tmat[indices_RtoG[:,None],indices_GtoG[None,:]] *= self.reductionTravel
         Tmat[indices_GtoG[:,None],indices_RtoG[None,:]] *= self.reductionTravel
-        
-        
+
         # Local changes if GtoR. Compensate for diagonal part of travel changes.
         for aa in indices_clusters_GtoR:
 
@@ -331,9 +338,7 @@ class Policy:
 
             indices_RtoG_aa = self.cluster1_Tml_children[aa]
             Tmat[indices_RtoG_aa[:,None],indices_RtoG_aa[None,:]] *= self.reductionLocal/self.reductionTravel
-            
-        
-        
+
         return Tmat
     
     
