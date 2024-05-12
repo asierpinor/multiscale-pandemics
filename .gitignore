@@ -1,12 +1,16 @@
 .vscode/
 data/*
 plots/
-notebooks/
+notebooks/*
 code_improvs.md
 __pycache__/
 .DS_Store
 
 # Notebooks to not ignore
+!notebooks/fig1.ipynb
+!notebooks/fig2.ipynb
+!notebooks/fig3.ipynb
+!notebooks/fig4.ipynb
 
 # Commuting/population data to not ignore
 !data/FAA_data/
