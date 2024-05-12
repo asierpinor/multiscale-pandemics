@@ -6,13 +6,37 @@ code_improvs.md
 __pycache__/
 .DS_Store
 
-# Data to not ignore
+# Notebooks to not ignore
+
+# Commuting/population data to not ignore
 !data/FAA_data/
 !data/Simplemaps_data/
 !data/StatesFIPS_data/
 !data/UScensus_data/
 
+# Figure data to not ignore
 !data/figure_data/
+
+# Geodata to not ignore
+!data/geodata/
+data/geodata/*
+!data/geodata/US_counties_geo/
+!data/geodata/US_divisions_geo/
+!data/geodata/US_regions_geo/
+!data/geodata/US_states_geo/
+!data/geodata/World_countries_geo/
+!data/geodata/World_continents_geo/
+!data/geodata/MX_states_geo/
+!data/geodata/Canada_states_geo/
+
+data/geodata/US_counties_geo/*
+data/geodata/US_divisions_geo/*
+data/geodata/US_regions_geo/*
+data/geodata/US_states_geo/*
+data/geodata/World_countries_geo/*
+data/geodata/World_continents_geo/*
+data/geodata/MX_states_geo/*
+data/geodata/Canada_states_geo/*
 
 !data/geodata/US_counties_geo/cb_2021_us_county_500k.shp
 !data/geodata/US_divisions_geo/cb_2022_us_division_500k.shp
@@ -22,5 +46,3 @@ __pycache__/
 #!data/geodata/World_continents_geo/World_Continents.shp
 #!data/geodata/MX_states_geo/mex_admbnda_adm1_govmex_20210618.shp
 #!data/geodata/Canada_states_geo/lpr_000b16a_e.shp
-
-# Notebooks to not ignore
