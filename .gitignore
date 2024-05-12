@@ -6,8 +6,21 @@ code_improvs.md
 __pycache__/
 .DS_Store
 
-# Not ignore
+# Data to not ignore
 !data/FAA_data/
 !data/Simplemaps_data/
 !data/StatesFIPS_data/
 !data/UScensus_data/
+
+!data/figure_data/
+
+!data/geodata/US_counties_geo/cb_2021_us_county_500k.shp
+!data/geodata/US_divisions_geo/cb_2022_us_division_500k.shp
+!data/geodata/US_regions_geo/cb_2022_us_region_500k.shp
+!data/geodata/US_states_geo/cb_2022_us_state_500k.shp
+!data/geodata/World_countries_geo/ne_10m_admin_0_countries.shp
+#!data/geodata/World_continents_geo/World_Continents.shp
+#!data/geodata/MX_states_geo/mex_admbnda_adm1_govmex_20210618.shp
+#!data/geodata/Canada_states_geo/lpr_000b16a_e.shp
+
+# Notebooks to not ignore
