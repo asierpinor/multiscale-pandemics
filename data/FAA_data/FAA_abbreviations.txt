@@ -1,0 +1,11 @@
+CY = Calendar Year (January 1 through December 31)
+
+RO = FAA Regional Office
+
+ST = Abbreviation for U.S. State or Territory
+
+Locid = Location Identifier for a specific airport
+
+S/L = Service Level - These are Airport Categories (P = Primary, CS = Commercial Service, GA = General Aviation).
+
+Hub = Hub Size and applies to Commercial Service Airport Categories (L = Large, M = Medium, S = Small, N = Nonhub Primary, and None = All airports but Primary) based on total CY enplanements.
