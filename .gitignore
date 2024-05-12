@@ -5,3 +5,9 @@ notebooks/
 code_improvs.md
 __pycache__/
 .DS_Store
+
+# Not ignore
+!data/FAA_data/
+!data/Simplemaps_data/
+!data/StatesFIPS_data/
+!data/UScensus_data/
